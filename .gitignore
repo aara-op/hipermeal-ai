@@ -45,3 +45,11 @@ android/capacitor-cordova-android-plugins/build/
 *.njsproj
 *.sln
 *.sw?
+
+# Separate RGIPT Attendance Project
+rgipt_face_attendance/
+
+# Personal Files
+*Resume*
+generate_resume.py
+

@@ -1,191 +1,229 @@
 import React, { useState } from 'react';
-import { Camera, Calendar, Repeat, Stethoscope, Maximize2, Minimize2 } from 'lucide-react';
-import { Header } from './components/Header';
-import { ScannerTab } from './components/ScannerTab';
-import { ScheduleTab } from './components/ScheduleTab';
-import { BrandSwapTab } from './components/BrandSwapTab';
-import { DoctorChecklistTab } from './components/DoctorChecklistTab';
-import { ResponsibleAIModal } from './components/ResponsibleAIModal';
-import { DRUG_DATABASE } from './data/drugDatabase';
+import { 
+  Utensils, 
+  Sparkles, 
+  Layers, 
+  Flame, 
+  Camera, 
+  ChevronDown, 
+  ChevronUp, 
+  ShieldCheck, 
+  Video, 
+  Activity, 
+  Award,
+  FileText
+} from 'lucide-react';
+import { HiperMealStudio } from './components/meal/HiperMealStudio';
+import { RecruiterSetupTab } from './components/interview/RecruiterSetupTab';
+import { CandidateOnboardingModal } from './components/interview/CandidateOnboardingModal';
+import { InterviewRoomTab } from './components/interview/InterviewRoomTab';
+import { ProctorSentinelTab } from './components/interview/ProctorSentinelTab';
+import { RecruiterDashboardTab } from './components/interview/RecruiterDashboardTab';
+import { HiperSkinTab } from './components/interview/HiperSkinTab';
+import { PlasmaBackground } from './components/ui/PlasmaBackground';
+import { SAMPLE_JOB_ROLES, SAMPLE_CANDIDATE_RESUMES, DEFAULT_INTERVIEW_QUESTIONS } from './data/interviewData';
 
 export function App() {
-  const [activeTab, setActiveTab] = useState('scanner');
-  const [language, setLanguage] = useState('en'); // 'en' or 'hi'
-  const [isGovernanceOpen, setIsGovernanceOpen] = useState(false);
-  const [isFullscreen, setIsFullscreen] = useState(false);
+  const [activeTab, setActiveTab] = useState('hipermeal'); // HiperMeal is primary!
+  const [showOtherTracks, setShowOtherTracks] = useState(false);
+  const [showOnboardingModal, setShowOnboardingModal] = useState(false);
+  
+  // Interview configuration state (for PS 1 if toggled)
+  const [sessionConfig, setSessionConfig] = useState({
+    role: SAMPLE_JOB_ROLES[0],
+    candidate: SAMPLE_CANDIDATE_RESUMES[0],
+    questionCount: 10,
+    difficulty: 'Senior',
+    durationMinutes: 30,
+    questions: DEFAULT_INTERVIEW_QUESTIONS
+  });
 
-  // User state across tabs
-  const [scheduleList, setScheduleList] = useState([
-    DRUG_DATABASE[0], // Pantocid 40 (Morning)
-    DRUG_DATABASE[2], // Glycomet 500 (Noon)
-    DRUG_DATABASE[4]  // Cetzine 10 (Bedtime)
+  const [incidentLogs, setIncidentLogs] = useState([
+    {
+      timestamp: '00:03:12',
+      type: 'CALIBRATION_BASELINE',
+      severity: 'LOW',
+      description: 'Primary webcam and secondary QR-paired mobile feed verified identical environment.'
+    }
   ]);
 
-  const [checklistItems, setChecklistItems] = useState([
-    DRUG_DATABASE[0],
-    DRUG_DATABASE[1]
-  ]);
-
-  const handleToggleLanguage = () => {
-    setLanguage(prev => (prev === 'en' ? 'hi' : 'en'));
-  };
-
-  const handleAddToSchedule = (drug) => {
-    if (!scheduleList.some(d => d.id === drug.id)) {
-      setScheduleList(prev => [...prev, drug]);
-    }
-  };
-
-  const handleRemoveScheduleItem = (drugId) => {
-    setScheduleList(prev => prev.filter(d => d.id !== drugId));
-  };
-
-  const handleAddToDoctorChecklist = (drug) => {
-    if (!checklistItems.some(d => d.id === drug.id)) {
-      setChecklistItems(prev => [...prev, drug]);
-    }
-  };
-
-  const handleRemoveChecklistItem = (drugId) => {
-    setChecklistItems(prev => prev.filter(d => d.id !== drugId));
-  };
+  const [interviewResult, setInterviewResult] = useState({
+    answers: {},
+    incidents: []
+  });
 
   return (
-    <div className={`min-h-screen flex items-center justify-center ${isFullscreen ? 'bg-slate-900 p-0' : 'bg-gradient-to-br from-slate-950 via-slate-900 to-teal-950 p-2 sm:p-6'}`}>
+    <div className="min-h-screen bg-stone-950/85 text-stone-100 flex flex-col font-sans selection:bg-amber-500 selection:text-stone-950 relative overflow-x-hidden">
+      {/* Animated WebGL1 Plasma Shader Background */}
+      <PlasmaBackground />
       
-      {/* Mobile Chassis Device Container on Desktop */}
-      <div className={`w-full transition-all duration-300 relative flex flex-col ${
-        isFullscreen 
-          ? 'max-w-none h-screen rounded-none shadow-none bg-slate-50' 
-          : 'max-w-[460px] h-[92vh] max-h-[920px] rounded-[44px] shadow-phone border-[8px] border-slate-800/90 overflow-hidden bg-slate-50'
-      }`}>
-        
-        {/* Dynamic Island on Desktop frame */}
-        {!isFullscreen && (
-          <div className="absolute top-2.5 left-1/2 transform -translate-x-1/2 w-28 h-4 bg-black rounded-full z-50 pointer-events-none flex items-center justify-end px-2">
-            <span className="w-2.5 h-2.5 rounded-full bg-slate-900 border border-slate-700/80 mr-1"></span>
-            <span className="w-1.5 h-1.5 rounded-full bg-blue-950/80"></span>
+      {/* Clean Aesthetic Modern Food Header (No dirty blue panels!) */}
+      <header className="sticky top-0 z-40 bg-stone-900/80 backdrop-blur-xl border-b border-stone-800/80 px-4 sm:px-8 py-3.5 shadow-sm">
+        <div className="max-w-7xl mx-auto flex items-center justify-between gap-4">
+          
+          {/* Brand Logo: Clean Warm Amber/Orange Food Identity */}
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 rounded-2xl bg-gradient-to-tr from-amber-500 via-orange-500 to-amber-600 flex items-center justify-center text-stone-950 shadow-lg shadow-amber-500/20 font-bold">
+              <Utensils className="w-5 h-5 text-stone-950" />
+            </div>
+            <div>
+              <div className="flex items-center gap-2">
+                <span className="font-black tracking-tight text-lg text-white">HiperMeal</span>
+                <span className="text-[10px] bg-amber-500/15 text-amber-300 border border-amber-500/30 font-mono px-2 py-0.5 rounded-full font-semibold">
+                  NVIDIA NIM Vision + Open Food Facts
+                </span>
+              </div>
+              <p className="text-[11px] text-stone-400">
+                AI Visual Nutrition Diary & Instant Macro Decomposition
+              </p>
+            </div>
+          </div>
+
+          {/* Quick Track & Navigation Actions */}
+          <div className="flex items-center gap-3">
+            
+            {/* Primary App Button */}
+            <button
+              onClick={() => setActiveTab('hipermeal')}
+              className={`px-4 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 shadow-sm ${
+                activeTab === 'hipermeal'
+                  ? 'bg-gradient-to-r from-amber-500 to-orange-500 text-stone-950 shadow-amber-500/20'
+                  : 'text-stone-300 hover:text-white bg-stone-900 border border-stone-800'
+              }`}
+            >
+              <Flame className="w-3.5 h-3.5" />
+              Meal Studio
+            </button>
+
+            {/* Dropdown Toggle to Access Other Hackathon Problem Statements */}
+            <button
+              onClick={() => setShowOtherTracks(!showOtherTracks)}
+              className="px-3.5 py-2 bg-stone-900 hover:bg-stone-800 border border-stone-800 text-stone-300 rounded-xl text-xs font-semibold flex items-center gap-1.5 transition-colors"
+            >
+              <Layers className="w-3.5 h-3.5 text-stone-400" />
+              <span>Other Problem Statements</span>
+              {showOtherTracks ? <ChevronUp className="w-3.5 h-3.5" /> : <ChevronDown className="w-3.5 h-3.5" />}
+            </button>
+          </div>
+
+        </div>
+
+        {/* Secondary Navigation Tray (Only if user opens Other Tracks) */}
+        {showOtherTracks && (
+          <div className="max-w-7xl mx-auto pt-3 mt-3 border-t border-stone-800/80 flex flex-wrap items-center gap-2 text-xs">
+            <span className="text-stone-500 text-[11px] font-mono mr-1">Switch Track:</span>
+            
+            <button
+              onClick={() => { setActiveTab('recruiter'); setShowOtherTracks(false); }}
+              className={`px-3 py-1.5 rounded-lg border text-xs font-medium transition-colors ${
+                activeTab === 'recruiter' ? 'bg-indigo-600 text-white border-indigo-500' : 'bg-stone-900 border-stone-800 text-stone-400 hover:text-stone-200'
+              }`}
+            >
+              PS 1: AI Interviewer (Recruiter Hub)
+            </button>
+
+            <button
+              onClick={() => { setActiveTab('interview'); setShowOtherTracks(false); }}
+              className={`px-3 py-1.5 rounded-lg border text-xs font-medium transition-colors ${
+                activeTab === 'interview' ? 'bg-indigo-600 text-white border-indigo-500' : 'bg-stone-900 border-stone-800 text-stone-400 hover:text-stone-200'
+              }`}
+            >
+              PS 1: Live Interview Room (Dual-Cam)
+            </button>
+
+            <button
+              onClick={() => { setActiveTab('sentinel'); setShowOtherTracks(false); }}
+              className={`px-3 py-1.5 rounded-lg border text-xs font-medium transition-colors ${
+                activeTab === 'sentinel' ? 'bg-indigo-600 text-white border-indigo-500' : 'bg-stone-900 border-stone-800 text-stone-400 hover:text-stone-200'
+              }`}
+            >
+              PS 1: Proctor Sentinel
+            </button>
+
+            <button
+              onClick={() => { setActiveTab('dashboard'); setShowOtherTracks(false); }}
+              className={`px-3 py-1.5 rounded-lg border text-xs font-medium transition-colors ${
+                activeTab === 'dashboard' ? 'bg-indigo-600 text-white border-indigo-500' : 'bg-stone-900 border-stone-800 text-stone-400 hover:text-stone-200'
+              }`}
+            >
+              PS 1: Recruiter Dossier
+            </button>
+
+            <button
+              onClick={() => { setActiveTab('hiperskin'); setShowOtherTracks(false); }}
+              className={`px-3 py-1.5 rounded-lg border text-xs font-medium transition-colors ${
+                activeTab === 'hiperskin' ? 'bg-teal-600 text-white border-teal-500' : 'bg-stone-900 border-stone-800 text-teal-400 hover:text-teal-300'
+              }`}
+            >
+              PS 2: HiperSkin Tracker
+            </button>
           </div>
         )}
+      </header>
 
-        {/* Top App Header */}
-        <Header 
-          language={language}
-          onToggleLanguage={handleToggleLanguage}
-          onOpenGovernance={() => setIsGovernanceOpen(true)}
-          isFullscreen={isFullscreen}
-          onToggleFullscreen={() => setIsFullscreen(!isFullscreen)}
+      {/* Main Dynamic Viewport */}
+      <main className="flex-1 p-4 sm:p-6 max-w-7xl w-full mx-auto">
+        {activeTab === 'hipermeal' && (
+          <HiperMealStudio />
+        )}
+
+        {activeTab === 'recruiter' && (
+          <RecruiterSetupTab 
+            onConfigureComplete={(cfg) => { setSessionConfig(cfg); setShowOnboardingModal(true); }} 
+          />
+        )}
+
+        {activeTab === 'interview' && (
+          <InterviewRoomTab 
+            config={sessionConfig}
+            onFinishInterview={(res) => { setInterviewResult(res); setActiveTab('dashboard'); }}
+            onLogIncident={(inc) => setIncidentLogs(prev => [inc, ...prev])}
+            incidentLogs={incidentLogs}
+          />
+        )}
+
+        {activeTab === 'sentinel' && (
+          <ProctorSentinelTab 
+            incidentLogs={incidentLogs} 
+          />
+        )}
+
+        {activeTab === 'dashboard' && (
+          <RecruiterDashboardTab 
+            interviewResult={interviewResult}
+            config={sessionConfig}
+          />
+        )}
+
+        {activeTab === 'hiperskin' && (
+          <HiperSkinTab />
+        )}
+      </main>
+
+      {/* Candidate Onboarding & Pre-Flight Modal (For PS 1 if launched) */}
+      {showOnboardingModal && (
+        <CandidateOnboardingModal
+          config={sessionConfig}
+          onStartInterview={() => { setShowOnboardingModal(false); setActiveTab('interview'); }}
+          onClose={() => setShowOnboardingModal(false)}
         />
+      )}
 
-        {/* Scrollable Main Content Area */}
-        <main className="flex-1 overflow-y-auto px-4 pt-3.5 pb-6">
-          {activeTab === 'scanner' && (
-            <ScannerTab 
-              language={language}
-              onAddToSchedule={handleAddToSchedule}
-              onAddToDoctorChecklist={handleAddToDoctorChecklist}
-            />
-          )}
-
-          {activeTab === 'schedule' && (
-            <ScheduleTab 
-              scheduleList={scheduleList}
-              onRemoveScheduleItem={handleRemoveScheduleItem}
-              language={language}
-            />
-          )}
-
-          {activeTab === 'brand-swap' && (
-            <BrandSwapTab 
-              language={language}
-            />
-          )}
-
-          {activeTab === 'doctor' && (
-            <DoctorChecklistTab 
-              checklistItems={checklistItems}
-              onRemoveChecklistItem={handleRemoveChecklistItem}
-              language={language}
-            />
-          )}
-        </main>
-
-        {/* Bottom Mobile Tab Bar */}
-        <nav className="sticky bottom-0 z-40 bg-white/95 backdrop-blur-md border-t border-slate-200/80 px-2 py-1.5 shadow-lg">
-          <div className="grid grid-cols-4 gap-1">
-            
-            {/* Tab 1: Scanner */}
-            <button
-              onClick={() => setActiveTab('scanner')}
-              className={`flex flex-col items-center justify-center py-1.5 px-1 rounded-xl transition ${
-                activeTab === 'scanner' 
-                  ? 'text-teal-700 font-extrabold bg-teal-50/70' 
-                  : 'text-slate-400 hover:text-slate-600 font-medium'
-              }`}
-            >
-              <Camera className="w-5 h-5 mb-0.5" />
-              <span className="text-[10px] tracking-tight">Scanner</span>
-            </button>
-
-            {/* Tab 2: 24h Schedule */}
-            <button
-              onClick={() => setActiveTab('schedule')}
-              className={`flex flex-col items-center justify-center py-1.5 px-1 rounded-xl transition relative ${
-                activeTab === 'schedule' 
-                  ? 'text-teal-700 font-extrabold bg-teal-50/70' 
-                  : 'text-slate-400 hover:text-slate-600 font-medium'
-              }`}
-            >
-              <Calendar className="w-5 h-5 mb-0.5" />
-              <span className="text-[10px] tracking-tight">Schedule</span>
-              {scheduleList.length > 0 && (
-                <span className="absolute top-1 right-3 w-4 h-4 bg-teal-600 text-white rounded-full text-[9px] font-bold flex items-center justify-center">
-                  {scheduleList.length}
-                </span>
-              )}
-            </button>
-
-            {/* Tab 3: Chemist Swap */}
-            <button
-              onClick={() => setActiveTab('brand-swap')}
-              className={`flex flex-col items-center justify-center py-1.5 px-1 rounded-xl transition ${
-                activeTab === 'brand-swap' 
-                  ? 'text-teal-700 font-extrabold bg-teal-50/70' 
-                  : 'text-slate-400 hover:text-slate-600 font-medium'
-              }`}
-            >
-              <Repeat className="w-5 h-5 mb-0.5" />
-              <span className="text-[10px] tracking-tight">Chemist Swap</span>
-            </button>
-
-            {/* Tab 4: Doctor Checklist */}
-            <button
-              onClick={() => setActiveTab('doctor')}
-              className={`flex flex-col items-center justify-center py-1.5 px-1 rounded-xl transition relative ${
-                activeTab === 'doctor' 
-                  ? 'text-teal-700 font-extrabold bg-teal-50/70' 
-                  : 'text-slate-400 hover:text-slate-600 font-medium'
-              }`}
-            >
-              <Stethoscope className="w-5 h-5 mb-0.5" />
-              <span className="text-[10px] tracking-tight">Doctor Note</span>
-              {checklistItems.length > 0 && (
-                <span className="absolute top-1 right-3 w-4 h-4 bg-amber-500 text-white rounded-full text-[9px] font-bold flex items-center justify-center">
-                  {checklistItems.length}
-                </span>
-              )}
-            </button>
-
+      {/* Minimalist Aesthetic Footer */}
+      <footer className="border-t border-stone-900 bg-stone-950/80 py-4 px-6 text-center text-xs text-stone-500">
+        <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-2">
+          <span>
+            HiperMeal &copy; 2026 • NVIDIA Multimodal NIM & Open Food Facts Grounded
+          </span>
+          <div className="flex items-center gap-4 text-[11px] text-stone-400">
+            <span>Real-time Image Ingestion</span>
+            <span>•</span>
+            <span>Editable Portion Weights</span>
+            <span>•</span>
+            <span>Macro Decomposition</span>
           </div>
-        </nav>
-
-        {/* Responsible AI Modal */}
-        <ResponsibleAIModal 
-          isOpen={isGovernanceOpen}
-          onClose={() => setIsGovernanceOpen(false)}
-        />
-
-      </div>
+        </div>
+      </footer>
 
     </div>
   );

@@ -1,201 +1,131 @@
-# 💊 Aushadhi Lens (औषधि लेंस)
-### Multimodal Medication Safety & Decision-Support Assistant
+# 🍽️ HiperMeal AI — Autonomous Multimodal Meal Vision & Clinical Nutrition Engine
+### Segmenting Complex Plates, Estimating Portions & Grounding Macros with 4.8M+ Open Food Facts & 1-Lakh Culinary Knowledge Base
 
-[![Live Demo](https://img.shields.io/badge/🚀_Live_Demo-Try_Aushadhi_Lens_Now-0F766E?style=for-the-badge&logo=vercel&logoColor=white)](https://aushadhi-lens-app.vercel.app/)
-[![IEEE RGIPT QUAL-AI-01](https://img.shields.io/badge/IEEE%20RGIPT-QUAL--AI--01-0F766E?style=for-the-badge&logo=ieee&logoColor=white)](https://kodekurrent.ieeergipt.in/)
-[![Responsible AI Grounded](https://img.shields.io/badge/Responsible%20AI-100%25%20On--Device-10B981?style=for-the-badge&logo=shield&logoColor=white)](#-responsible-ai--governance)
 [![React 19](https://img.shields.io/badge/React-19.2-61DAFB?style=for-the-badge&logo=react&logoColor=black)](https://react.dev/)
-[![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-3.4-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white)](https://tailwindcss.com/)
-[![Android APK Available](https://img.shields.io/badge/Android-APK%20Included-3DDC84?style=for-the-badge&logo=android&logoColor=white)](./Aushadhi-Lens.apk)
+[![FastAPI](https://img.shields.io/badge/FastAPI-0.115-009688?style=for-the-badge&logo=fastapi&logoColor=white)](https://fastapi.tiangolo.com/)
+[![WebGL1](https://img.shields.io/badge/WebGL1-Plasma_Shader_60FPS-990000?style=for-the-badge&logo=webgl&logoColor=white)](https://get.webgl.org/)
+[![NVIDIA NIM](https://img.shields.io/badge/NVIDIA_NIM-Llama_3.2_Vision-76B900?style=for-the-badge&logo=nvidia&logoColor=white)](https://build.nvidia.com/)
+[![Open Food Facts](https://img.shields.io/badge/Open_Food_Facts-4.8M+_Items-F49D37?style=for-the-badge&logo=openfoodfacts&logoColor=white)](https://world.openfoodfacts.org/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-amber?style=for-the-badge)](LICENSE)
-
-> 🌐 **Live Web Application:** **[https://aushadhi-lens-app.vercel.app/](https://aushadhi-lens-app.vercel.app/)**  
-> 📱 **Android APK:** [Download Aushadhi-Lens.apk (4.4 MB)](./Aushadhi-Lens.apk)  
-> 🛡️ **Theme:** Transforming unreadable medicine packaging into explainable, voice-guided safety decisions for everyday Indian households—with 100% on-device privacy.
 
 ---
 
 ## 📌 Problem Overview
+Traditional dietary tracking has an **85% drop-off rate** within the first 14 days because manual logging (typing item names, guessing portion weights in grams) creates extreme friction.
 
-In Indian households, non-clinical caregivers and elderly patients managing chronic illnesses (diabetes, hypertension, fever, pain) face three high-stakes hurdles daily:
+Furthermore, traditional single-label computer vision classifiers (such as Food-101 / standard CNNs) fail on **complex, mixed plates**. When presented with a daily meal—such as an Indian Thali containing **Whole Wheat Roti**, **Homestyle Sabji**, and **Yellow Dal Tadka**, or breakfast combos like **Indori Poha** and **Saffron Jalebi**—conventional models can only guess a single label or hallucinate incorrect numbers.
 
-1. **Unreadable Fine Print:** Blister packs use 6-point shiny, reflective fonts that are nearly impossible for elderly eyes to read.
-2. **Chemist Brand Substitutions:** Local medical stores routinely swap prescribed brands for alternative generics (*"Dolo nahi hai, Calpol le lo"*, *"Combiflam nahi hai, Ibufyl Plus le lo"*), creating fear and confusion: *"Is this the same active medicine?"*
-3. **Dangerous Administration Errors:** Lack of clarity on meal timings (empty stomach vs. post-meal) and unintentional multi-drug overlaps cause thousands of preventable adverse drug events annually.
-
-### The Specific User Decision
-> *"Did the chemist give me the safe, exact active salt? When and how should I take this dose without food/drug conflicts? What specific questions must I clarify with my doctor?"*
+### The HiperMeal AI Solution:
+1. **Autonomous Multimodal Meal Vision (VLM):** Simultaneously segments all distinct dishes on a plate and estimates realistic portion weights in grams.
+2. **Clinical Nutrition Grounding:** Directly verifies every detected food against the **Open Food Facts API (4.8M+ items)** and our **Verified 7-Continent Culinary Database (100,000+ / 1 Lakh items)** to eliminate AI hallucination.
+3. **Actionable Metabolic Indicators:** Instant **Nutri-Score (A to E)**, **NOVA Food Processing Group (1 to 4)**, **Glycemic Index (Low/Medium/High)**, and **Smart Dietitian Clinical Swaps**.
+4. **Human-in-the-Loop (HITL) UX:** One-tap portion scaling (`0.5x`, `1x`, `1.5x`), natural language adjustments (*"added 1 tsp ghee"*), and real-time live macro recalculation.
+5. **Interactive WebGL Plasma Shader:** GPU-accelerated pattern shader running smoothly at 60 FPS capped at 2 DPR for maximum performance.
 
 ---
 
-## 🌟 Key Features
+## 🍛 Featured 1-Lakh Food Catalog Staples
+HiperMeal AI provides high-fidelity grounding for continental cuisines worldwide, specifically prioritizing authentic regional staples:
 
-### 1. 📸 Multimodal Visual Ingestion & Neural OCR
-* **Live Camera Stream & Upload:** Point your phone camera or upload any physical blister pack photo.
-* **Explainable Visual Evidence Canvas:** Projects interactive, color-coded bounding boxes directly onto the original physical packaging image:
-  * 🟢 **Active Salt Identification** (e.g., *Ibuprofen 400mg + Paracetamol 325mg*)
-  * 🔵 **Brand Identifier** (e.g., *Ibufyl Plus / Dolo-650*)
-  * 🟡 **Batch & Expiry Stamp** (e.g., *B.No. SP503F | EXP. 05/2027*)
-* **1-Tap Demo Samples:** Includes pre-loaded high-resolution blister packs for instant demonstration:
-  * **Ibufyl Plus** (Painkiller & Anti-inflammatory)
-  * **Dolo 650** (Fever & Pain)
-  * **Pantocid 40** (Acidity & GERD)
-  * **Glycomet 500** (Type 2 Diabetes)
-  * **Augmentin 625** (Broad-Spectrum Antibiotic)
-  * **Cetzine 10** (Antihistamine / Allergy)
-
-### 2. 🔊 Spoken Vernacular Guidance (Audio Accessibility)
-* Built-in natural voice synthesis in **conversational Hindi (`hi-IN`) and English (`en-IN`)**.
-* Visualized through a live animated audio waveform.
-* Example Spoken Hindi:  
-  > *"यह इबुफिल प्लस है, जिसमें इबुप्रोफेन और पैरासिटामोल है। यह दर्द और सूजन कम करने की दवा है। इसे हमेशा खाना खाने के बाद या दूध के साथ लें, खाली पेट कभी न लें।"*
-
-### 3. ⏰ Chrono-Pharmacology Administration Rules
-* Clear, unmistakable visual badges showing exact meal relation:
-  * **EMPTY STOMACH (30–40 min before breakfast):** For PPIs like Pantoprazole.
-  * **WITH OR AFTER MEALS:** For NSAIDs/Painkillers (Ibufyl Plus) and Metformin to prevent gastric irritation.
-  * **BEDTIME / NIGHT:** For sedating antihistamines (Cetirizine).
-
-### 4. 🔄 Chemist Brand-Swap Auditor
-* An interactive matrix to compare **Doctor's Prescribed Brand** vs. **Chemist's Proposed Generic**.
-* Algorithmic bioequivalence check: confirms identical active pharmaceutical ingredients (APIs), flags strength mismatches, and displays estimated generic cost savings (e.g., ₹38.80 vs ₹14 — save 64%).
-
-### 5. 🕒 24-Hour Medication Routine
-* Automatically slots user medications into Morning, Afternoon, and Night windows.
-* 1-tap **"Share via WhatsApp / Clipboard"** export for family members or caregivers.
-
-### 6. 🩺 Doctor Consultation Checklist
-* Automatically compiles flagged safety questions and contraindications into a checklist for the patient's next clinical visit.
+| Dish | Components & Classification | Calories & Macros (per 100g) | Nutri-Score & NOVA | Clinical Swap & Glycemic Index |
+| :--- | :--- | :--- | :--- | :--- |
+| **🫓 Roti** | Whole Wheat Phulka / Chapati | **260 kcal** · P: 9.4g · C: 52.0g · F: 2.8g · Fib: 8.5g | **Nutri-Score A** · NOVA 1 | **GI 54 (Medium)**: Add 20% besan/sattu for +4g protein. |
+| **🍛 Sabji** | Homestyle Aloo Gobi & Mixed Seasonal Veggies | **95 kcal** · P: 2.8g · C: 11.2g · F: 4.5g · Fib: 3.2g | **Nutri-Score A** · NOVA 1 | **GI 42 (Low)**: Cooked with mustard oil & turmeric; high in antioxidants. |
+| **🥣 Poha** | Indori Kanda Batata Poha with Peanuts | **160 kcal** · P: 3.5g · C: 28.0g · F: 4.2g · Fib: 2.1g | **Nutri-Score A** · NOVA 2 | **GI 52 (Medium)**: Fresh lemon juice triples non-heme iron absorption. |
+| **🥨 Jalebi** | Crispy Golden Saffron & Cardamom Spirals | **380 kcal** · P: 2.2g · C: 68.5g · F: 11.8g · Fib: 0.5g | **Nutri-Score E** · NOVA 3 | **GI 78 (High)**: Pair with unsweetened warm milk or Greek yogurt. |
+| **🥟 Samosa** | Crispy Potato & Pea Samosa with Mint Chutney | **262 kcal** · P: 4.5g · C: 32.0g · F: 13.5g · Fib: 2.8g | **Nutri-Score D** · NOVA 3 | **GI 71 (High)**: Air-fry at 200°C to eliminate 60% of deep-frying oil. |
+| **🥮 Kachori** | Crispy Khasta Pyaaz / Moong Dal Kachori | **340 kcal** · P: 6.2g · C: 38.0g · F: 18.5g · Fib: 3.4g | **Nutri-Score D** · NOVA 3 | **GI 68 (High)**: Flaky ajwain crust pastry with spiced moong dal. |
 
 ---
 
 ## 🏗️ System Architecture
 
-```mermaid
-flowchart TD
-    A[Physical Medicine Strip / Blister Foil] --> B{Input Method}
-    B -->|Live Mobile Camera| C[WebRTC Video Stream]
-    B -->|Photo Upload| D[Image File Ingestion]
-    B -->|1-Tap Preset Strip| E[Verified Pharmacopeia Sample]
-
-    C --> F[On-Device Neural OCR Engine]
-    D --> F
-    E --> F
-
-    F --> G[Token & Geometry Extractor]
-    G --> H[Deterministic CDSCO Formulary Grounding]
-
-    H --> I{Confidence Check}
-    I -->|< 65% Match| J[Uncertainty Refusal Safety Warning]
-    I -->|≥ 65% Match| K[Explainability & Decision Engine]
-
-    K --> L[Visual Canvas: Colored Bounding Box Overlay]
-    K --> M[Chrono-Pharmacology Administration Card]
-    K --> N[Bilingual Vernacular Speech Synthesis]
-    K --> O[Chemist Brand-Swap & Doctor Checklist]
+```
+  ┌─────────────────────────────────────────────────────────────┐
+  │       CLIENT VIEWPORT: React 19 + Tailwind + WebGL1         │
+  │  (Camera Snap, File Upload, 1-Tap Desi Bar, Portion Sliders)│
+  └──────────────────────────────┬──────────────────────────────┘
+                                 │ HTTP / JSON
+                                 ▼
+  ┌─────────────────────────────────────────────────────────────┐
+  │              FASTAPI MICROSERVICE (Port 8005)               │
+  │                                                             │
+  │   ├── Tier 1: Cloud VLM (NVIDIA NIM Llama-3.2-11B-Vision)   │
+  │   ├── Tier 2: Edge VLM (Local Ollama Moondream / Gemma)     │
+  │   └── Tier 3: Zero-Latency Lexical & Spectral Analyzer      │
+  └──────────────────────────────┬──────────────────────────────┘
+                                 │
+                                 ▼
+  ┌─────────────────────────────────────────────────────────────┐
+  │             CLINICAL GROUNDING & METABOLIC ENGINE           │
+  │   ├── Open Food Facts API (4.8M+ Global Barcode Database)   │
+  │   └── World Culinary DB (100k+ Authentic Regional Dishes)   │
+  └─────────────────────────────────────────────────────────────┘
 ```
 
 ---
 
-## 🛡️ Responsible AI & Governance
+## ⚡ Quick Start & Local Execution
 
-Aushadhi Lens is engineered in strict compliance with the **IEEE RGIPT QUAL-AI-01** Ground Rules:
+### 1. Prerequisites
+- **Node.js**: v18+ or v20+
+- **Python**: 3.10+ with `pip`
 
-| IEEE Mandate | How Aushadhi Lens Complies |
-|---|---|
-| **Decision Support, Not Replacement** | Strictly provides safety verification, meal timing, and doctor checklists. Explicitly **disclaims medical diagnosis or prescription modification**. |
-| **Explainability & Provenance** | Never outputs ungrounded text. Every result displays **visual bounding boxes** on physical packaging alongside calculated confidence scores. |
-| **100% Privacy by Design** | Runs on-device. **Zero patient health records, images, or audio queries are stored on or transmitted to external cloud servers.** |
-| **Uncertainty & Anti-Hallucination** | If image text is blurry or confidence falls below 65%, the system **refuses to guess** and triggers an alert directing the user to a pharmacist. |
-| **Human-in-the-Loop** | Equips patients with specific questions for their attending physician rather than replacing clinical care. |
-
----
-
-## 🛠️ Tech Stack
-
-* **Frontend:** React 19, Tailwind CSS, Lucide Icons, Canvas API, Web Speech API (`SpeechSynthesis`)
-* **Build Tool:** Vite 8
-* **OCR & Vision Layer:** Tesseract Neural OCR (Client WASM) + Python RapidFuzz matching engine
-* **Backend (Optional / Local API):** FastAPI, Uvicorn, Pillow, RapidFuzz
-* **Mobile Packaging:** Capacitor 7 (Android PWA & Native APK build included)
-
----
-
-## 🚀 Getting Started
-
-### Prerequisites
-* Node.js (v18+)
-* Python 3.10+ (for optional backend server)
-
-### 1. Clone the Repository
+### 2. Frontend Setup
 ```bash
-git clone https://github.com/<your-username>/aushadhi-lens.git
-cd aushadhi-lens
-```
+# Clone the repository
+git clone https://github.com/aara-op/hipermeal-ai.git
+cd hipermeal-ai
 
-### 2. Install Frontend Dependencies
-```bash
+# Install dependencies
 npm install
-```
 
-### 3. Run the Development Server
-```bash
+# Start Vite development server
 npm run dev
+# Live at http://localhost:5173
 ```
-Open [http://localhost:5173](http://localhost:5173) in your browser.
 
----
-
-## 🐍 Running the FastAPI Backend Server (Optional)
-
-If you wish to run the combined FastAPI + Pharmacopeia Server:
-
+### 3. VLM & Nutrition Microservice (Port 8005)
 ```bash
-# Install Python requirements
-pip install fastapi uvicorn pillow rapidfuzz
+# Install Python dependencies
+pip install fastapi uvicorn httpx pillow pydantic
 
-# Build the frontend
-npm run build
-
-# Start the server
-python server.py
+# Run the microservice
+python meal_vlm_server.py
+# Online at http://localhost:8005
+# Interactive Swagger Docs at http://localhost:8005/docs
 ```
-* **Local Web App:** [http://localhost:8080](http://localhost:8080)
-* **API Documentation:** [http://localhost:8080/docs](http://localhost:8080/docs)
-* **Access on Mobile:** `http://<YOUR_LOCAL_IP>:8080`
+
+### 4. CLI Model Inference Tool
+You can test meal decomposition directly from your terminal:
+```bash
+# Run self-contained verification benchmark
+python generate_food_model.py --test
+
+# Analyze any local image or web URL
+python generate_food_model.py --image "https://images.unsplash.com/photo-1585937421612-70a008356fbe?w=600"
+```
 
 ---
 
-## 📱 Mobile Installation
+## 🚀 Cloud Deployment Options
 
-### Option A: Progressive Web App (PWA)
-1. Open the app URL on your Android or iOS phone in Chrome / Safari.
-2. Tap the browser menu `⋮` $\rightarrow$ Tap **"Install App"** (or *"Add to Home Screen"*).
-3. The app installs with a native icon and runs in standalone full-screen mode.
+### Option 1: Vercel (Frontend 1-Click Deploy)
+1. Fork or push this repository to your GitHub account.
+2. Go to [Vercel](https://vercel.com/) and click **Add New Project**.
+3. Select this repository and click **Deploy**. Vercel will automatically build the React Vite bundle and provision an SSL domain (`*.vercel.app`).
 
-### Option B: Native Android APK
-A pre-built, lightweight Android APK (`Aushadhi-Lens.apk` — 4.4 MB) is included directly in the root of this repository:
-1. Download [**`Aushadhi-Lens.apk`**](./Aushadhi-Lens.apk) onto your Android device.
-2. Tap to install.
+### Option 2: Docker / DigitalOcean App Platform / Render (Full-Stack)
+This repository includes a multi-stage production `Dockerfile` and `.do/app.yaml`:
+```bash
+# Build the production container
+docker build -t hipermeal-ai:latest .
 
----
-
-## 🌐 1-Click Deployment (Vercel / Netlify)
-
-### Deploy to Vercel
-1. Fork or push this repository to GitHub.
-2. Import the project into [Vercel](https://vercel.com/).
-3. Framework Preset: **Vite**  
-   Build Command: `npm run build`  
-   Output Directory: `dist`
-4. Click **Deploy** — your app is live on HTTPS in 30 seconds!
+# Run locally on Port 80
+docker run -p 80:80 hipermeal-ai:latest
+```
 
 ---
 
 ## 📄 License
-This project is licensed under the [MIT License](LICENSE).
-
----
-
-## 👥 Acknowledgments
-Developed for **QUAL-AI-01: Multimodal AI for Real-World Decision Support**, organized by the **IEEE RGIPT Student Branch**.
+MIT License. Open for hackathons, clinical research, and commercial dietary applications.
