@@ -15,6 +15,7 @@ export default defineConfig({
     host: true,
     port: 5173,
     cors: true,
+    allowedHosts: true,
     proxy: {
       '/api/vlm': {
         target: 'http://127.0.0.1:8005',
